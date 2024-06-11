@@ -3,7 +3,6 @@
 import Image from "next/image";
 import styles from "./writePage.module.css";
 import { useEffect, useState } from "react";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -15,11 +14,9 @@ import {
 } from "firebase/storage";
 import { app } from "@/utils/firebase";
 
-const storage = getStorage(app);
-
 const WritePage = () => {
   const { status } = useSession();
-
+  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -27,10 +24,12 @@ const WritePage = () => {
   const [media, setMedia] = useState("");
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
+  const [catSlug, setCatSlug] = useState("");
 
   useEffect(() => {
+    const storage = getStorage(app);
     const upload = () => {
-      const name = new Date().getTime + file.name;
+      const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, name);
 
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -50,38 +49,35 @@ const WritePage = () => {
               break;
           }
         },
-        (error) => {
-          // Handle unsuccessful uploads
-        },
+        (error) => {},
         () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setMedia(downloadURL)
+            setMedia(downloadURL);
           });
         }
       );
     };
 
-    file && upload;
+    file && upload();
   }, [file]);
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
   }
+
   if (status === "unauthenticated") {
     router.push("/");
   }
 
-  const slugify = (str) => 
-  str
-  .toLowerCase()
-  .trim()
-  .replace(/[^\w\s-]/g, "")
-  .replace(/[\s_-]/g, "-")
-  .replace(/^-+|-+$/g, "")
+  const slugify = (str) =>
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     const res = await fetch(`${process.env.URL}/api/posts`, {
       method: "POST",
       body: JSON.stringify({
@@ -89,11 +85,15 @@ const WritePage = () => {
         desc: value,
         img: media,
         slug: slugify(title),
+        catSlug: catSlug || "style", //If not selected, choose the general category
       }),
     });
 
-    console.log(res)
-  }
+    if (res.status === 200) {
+      const data = await res.json();
+      router.push(`/posts/${data.slug}`);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -103,15 +103,20 @@ const WritePage = () => {
         className={styles.input}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <select
+        className={styles.select}
+        onChange={(e) => setCatSlug(e.target.value)}
+      >
+        <option value="style">style</option>
+        <option value="fashion">fashion</option>
+        <option value="food">food</option>
+        <option value="culture">culture</option>
+        <option value="travel">travel</option>
+        <option value="coding">coding</option>
+      </select>
       <div className={styles.editor}>
-        <button className={styles.button}>
-          <Image
-            src="/plus.png"
-            alt=""
-            width={16}
-            height={16}
-            onClick={() => setOpen(!open)}
-          />
+        <button className={styles.button} onClick={() => setOpen(!open)}>
+          <Image src="/plus.png" alt="" width={16} height={16} />
         </button>
         {open && (
           <div className={styles.add}>
@@ -127,7 +132,7 @@ const WritePage = () => {
               </label>
             </button>
             <button className={styles.addButton}>
-              <Image src="/inbox-out.png" alt="" width={14} height={14} />
+              <Image src="/external.png" alt="" width={16} height={16} />
             </button>
             <button className={styles.addButton}>
               <Image src="/video.png" alt="" width={16} height={16} />
@@ -142,7 +147,9 @@ const WritePage = () => {
           placeholder="Tell your story..."
         />
       </div>
-      <button className={styles.publish} onClick={handleSubmit}>Publish</button>
+      <button className={styles.publish} onClick={handleSubmit}>
+        Publish
+      </button>
     </div>
   );
 };
