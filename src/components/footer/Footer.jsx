@@ -9,7 +9,7 @@ const Footer = () => {
       <div className={styles.info}>
         <div className={styles.logo}>
           <Image src="/logo.png" alt="" width={50} height={50} />
-          <h1 className={styles.logoText}>Lamablog</h1>
+          <h1 className={styles.logoText}>Magelang.Blog</h1>
         </div>
         <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis blanditiis adipisci nihil consectetur saepe impedit vel cupiditate facilis dolore alias architecto, sunt sit incidunt! Doloribus asperiores mollitia sapiente similique quibusdam?</p>
         <div className={styles.icons}>
