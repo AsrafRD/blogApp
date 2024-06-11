@@ -1,4 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ["lh3.googleusercontent.com"],
+  },
+  env: {
+    URL: process.env.URL
+  }
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
