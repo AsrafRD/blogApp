@@ -56,3 +56,73 @@ export const POST = async (req) => {
     );
   }
 };
+
+export const PATCH = async (req) => {
+  const session = await getAuthSession();
+  const body = await req.json();
+  const slug = body.dataSlug;
+
+  console.log("slug nya:", slug);
+  console.log("body nya:", body);
+
+  if (!slug) {
+    return new NextResponse(
+      JSON.stringify({ message: "Missing slug parameter" }),
+      { status: 400 }
+    );
+  }
+
+  if (!session) {
+    return new NextResponse(JSON.stringify({ message: "Not Authenticated!" }), {
+      status: 401,
+    });
+  }
+
+  if (req.method === "PATCH") {
+    try {
+      const { dataSlug, ...postData } = body; // Mengeluarkan dataSlug dari body
+
+      if (!postData) {
+        return new NextResponse(
+          JSON.stringify({ message: "Invalid request data" }),
+          { status: 400 }
+        );
+      }
+
+      const post = await prisma.post.findUnique({
+        where: { slug },
+      });
+
+      if (!post) {
+        return new NextResponse(JSON.stringify({ message: "Post not found" }), {
+          status: 404,
+        });
+      }
+
+      if (post.userEmail !== session.user.email) {
+        return new NextResponse(
+          JSON.stringify({ message: "Unauthorized action" }),
+          { status: 403 }
+        );
+      }
+
+      const updatedPost = await prisma.post.update({
+        where: { slug },
+        data: { ...postData, slug }, // Gunakan nilai dataSlug sebagai slug baru
+      });
+
+      return new NextResponse(JSON.stringify(updatedPost), { status: 200 });
+    } catch (err) {
+      console.log("Error updating post:", err);
+      return new NextResponse(
+        JSON.stringify({ message: "Something went wrong!" }),
+        { status: 500 }
+      );
+    }
+  }
+
+  return new NextResponse(
+    JSON.stringify({ message: "Method not allowed" }),
+    { status: 405 }
+  );
+};

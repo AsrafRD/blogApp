@@ -15,14 +15,14 @@ const Card = ({ key, item }) => {
         <Link href={`/posts/${item.slug}`}>
           <h1>{item.title}</h1>
         </Link>
-        <div className={styles.desc} dangerouslySetInnerHTML={{ __html: item?.desc.substring(0, 1000) }} />
+        <div className={styles.postDesc} dangerouslySetInnerHTML={{ __html: item?.desc.length > 640 ? `${item?.desc.substring(0, 640)}...` : item?.desc }} />
         <Link href={`/posts/${item.slug}`} className={styles.link}>
           Read More
         </Link>
       </div>
       {item.img && (
         <div className={styles.imgContainer}>
-          <Image src="/p1.jpeg" alt="" fill className={styles.image} />
+          <Image src={item.img} alt="" fill className={styles.image} />
         </div>
       )}
     </div>

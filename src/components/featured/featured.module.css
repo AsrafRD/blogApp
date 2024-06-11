@@ -37,7 +37,8 @@
 
 .postDesc {
     font-size: 20px;
-    font-weight: 300;
+    font-weight: 400;
+    text-align: justify;
     color: var(--TextColor);
 }
 
@@ -46,7 +47,13 @@
     border: none;
     border-radius: 5px;
     width: max-content;
+    cursor: pointer;
 }
+
+.textContainer button:hover {
+    background-color: #d79a9ad3;
+    color: white; /* Warna latar belakang saat dihover */
+  }
 
 @media screen and (max-width: 1280px) {
     .title {

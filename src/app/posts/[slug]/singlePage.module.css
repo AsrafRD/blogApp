@@ -1,98 +1,121 @@
-.container {
-
-}
-
 .infoContainer {
-    display: flex;
-    align-items: center;
-    gap: 50px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
 }
 
 .textContainer {
-    flex: 1;
+  flex: 1;
 }
 
 .title {
-    font-size: 64px;
-    margin-bottom: 50px;
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .user {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .userImageContainer {
-    width: 50px;
-    height: 50px;
-    position: relative;
+  width: 50px;
+  height: 50px;
+  position: relative;
 }
 
 .avatar {
-    border-radius: 50%;
-    object-fit: cover;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .userTextContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    color: var(--softTextColor);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--softTextColor);
 }
 
 .username {
-    font-size: 20px;
-    font-weight: 500;
+  font-size: 20px;
+  font-weight: 500;
 }
 
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Jarak antara tombol */
+  }
+  
+  .actions button {
+    padding: 15px 20px; /* Padding tombol */
+    font-size: 16px; /* Ukuran font */
+    border: none; /* Hapus border */
+    border-radius: 5px; /* Sudut border */
+    cursor: pointer; /* Kursor menunjukkan interaktif */
+  }
+  
+  .actions button:hover {
+    background-color: #d79a9ad3;
+    color: white; /* Warna latar belakang saat dihover */
+  }
+
 .imageContainer {
-    flex: 1;
-    height: 350px;
-    position: relative;
+  flex: 1;
+  height: 350px;
+  position: relative;
 }
 
 .image {
-    object-fit: cover;
+  object-fit: cover;
 }
 
 .content {
-    display: flex;
-    gap: 50px;
+  display: flex;
+  gap: 50px;
 }
 
 .post {
-    flex: 5;
-    margin-top: 60px;
+  flex: 5;
+  margin-top: 60px;
 }
 
-.desc p{
-    font-size: 20px;
-    font-weight: 300;
-    margin-bottom: 20px;
+.read {
+  font-size: 18px;
+  color: var(--softTextColor); /* Sesuaikan warna sesuai kebutuhan */
+  margin-bottom: 10px; /* Sesuaikan jarak bawah sesuai kebutuhan */
+}
+
+.desc {
+  text-align: justify;
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 1536px) {
-    .title {
-        font-size: 54px;
-    }
+  .title {
+    font-size: 54px;
+  }
 }
 @media screen and (max-width: 1280px) {
-    .title {
-        font-size: 48px;
-    }
+  .title {
+    font-size: 48px;
+  }
 }
 @media screen and (max-width: 1024px) {
-    .imageContainer {
-        display: none;
-    }
+  .imageContainer {
+    display: none;
+  }
 }
 @media screen and (max-width: 640px) {
-    .title {
-        font-size: 36px;
-    }
+  .title {
+    font-size: 36px;
+  }
 
-    .desc p{
-        font-size: 18px;
-    }
+  .desc p {
+    font-size: 18px;
+  }
 }

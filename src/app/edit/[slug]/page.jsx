@@ -1,8 +1,7 @@
-
 "use client";
 
 import Image from "next/image";
-import styles from "./writePage.module.css";
+import styles from "./editPage.module.css";
 import { useEffect, useState } from "react";
 import "react-quill/dist/quill.bubble.css";
 import { useRouter } from "next/navigation";
@@ -16,9 +15,12 @@ import {
 import { app } from "@/utils/firebase";
 import dynamic from "next/dynamic";
 
-const WritePage = () => {
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const EditPage = ({ params }) => {
   const { status } = useSession();
   const router = useRouter();
+  const { slug } = params;
 
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
@@ -26,41 +28,60 @@ const WritePage = () => {
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
   const [catSlug, setCatSlug] = useState("");
-  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
   useEffect(() => {
-    const storage = getStorage(app);
-    const upload = () => {
-      const name = new Date().getTime() + file.name;
-      const storageRef = ref(storage, name);
-
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {},
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            setMedia(downloadURL);
-          });
-        }
-      );
+    const fetchData = async () => {
+      const res = await fetch(`${process.env.URL}/api/posts/${slug}`);
+      if (res.ok) {
+        const data = await res.json();
+        setTitle(data.title);
+        setMedia(data.img);
+        setValue(data.desc);
+        setCatSlug(data.catSlug);
+      }
+      console.log("set media nya ni", setMedia)
     };
 
-    file && upload();
+    fetchData();
+  }, [slug]);
+
+  useEffect(() => {
+    if (file) {
+      const storage = getStorage(app);
+      const upload = () => {
+        const name = new Date().getTime() + file.name;
+        const storageRef = ref(storage, name);
+
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            console.error("Upload failed", error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              setMedia(downloadURL);
+            });
+          }
+        );
+      };
+
+      upload();
+    }
   }, [file]);
 
   if (status === "loading") {
@@ -69,6 +90,7 @@ const WritePage = () => {
 
   if (status === "unauthenticated") {
     router.push("/");
+    return null;
   }
 
   const slugify = (str) =>
@@ -79,23 +101,26 @@ const WritePage = () => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handleSubmit = async () => {
-    const res = await fetch(`${process.env.URL}/api/posts`, {
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        desc: value,
-        img: media,
-        slug: slugify(title),
-        catSlug: catSlug || "style",
-      }),
-    });
+      const handleSubmit = async () => {
+        const res = await fetch(`${process.env.URL}/api/posts/${slug}`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            title,
+            desc: value,
+            img: media,
+            slug: slugify(title),
+            catSlug: catSlug || "style",
+          }),
+        });
+      
+        if (res.status === 200) {
+          const data = await res.json();
+          router.push(`/posts/${data.slug}`);
+        }
+      };
 
-    if (res.status === 200) {
-      const data = await res.json();
-      router.push(`/posts/${data.slug}`);
-    }
-  };
+  console.log("medianya ni", media);
+  console.log("filenya ni", file);
 
   return (
     <div className={styles.container}>
@@ -103,9 +128,14 @@ const WritePage = () => {
         type="text"
         placeholder="Title"
         className={styles.input}
+        value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
+      <select
+        className={styles.select}
+        value={catSlug}
+        onChange={(e) => setCatSlug(e.target.value)}
+      >
         <option value="style">style</option>
         <option value="fashion">fashion</option>
         <option value="food">food</option>
@@ -147,10 +177,10 @@ const WritePage = () => {
         />
       </div>
       <button className={styles.publish} onClick={handleSubmit}>
-        Publish
+        Update
       </button>
     </div>
   );
 };
 
-export default WritePage;
+export default EditPage;
