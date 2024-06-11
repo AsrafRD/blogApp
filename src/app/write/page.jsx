@@ -13,10 +13,10 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "@/utils/firebase";
+import ReactQuill from "react-quill";
 
 const WritePage = () => {
   const { status } = useSession();
-  const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -28,6 +28,7 @@ const WritePage = () => {
 
   useEffect(() => {
     const storage = getStorage(app);
+    // const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
     const upload = () => {
       const name = new Date().getTime() + file.name;
       const storageRef = ref(storage, name);
@@ -103,10 +104,7 @@ const WritePage = () => {
         className={styles.input}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <select
-        className={styles.select}
-        onChange={(e) => setCatSlug(e.target.value)}
-      >
+      <select className={styles.select} onChange={(e) => setCatSlug(e.target.value)}>
         <option value="style">style</option>
         <option value="fashion">fashion</option>
         <option value="food">food</option>
