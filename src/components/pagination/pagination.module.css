@@ -1,18 +1,26 @@
 .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
-  width: 100px;
+  width: 40px;
+  height: 40px;
   border: none;
-  padding: 16px;
+  border-radius: 50%;
+  margin: 0 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: crimson;
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #a30000;
 }
 
 .button:disabled {
@@ -20,13 +28,55 @@
   cursor: not-allowed;
 }
 
+.pageNumber,
+.first,
+.last {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  margin: 0px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: crimson;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pageNumber:hover,
+.first:hover,
+.last:hover {
+  background-color: rgba(240, 65, 100, 0.509);
+  color: white;
+}
+
+.currentPage {
+  background-color: rgba(222, 101, 125, 0.305);
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.dots {
+  margin: 0 5px;
+  font-size: 18px;
+}
+
 @media screen and (max-width: 640px) {
   .container {
     margin-top: 15px;
   }
-  .button {
-    width: 50px;
-    padding: 10px;
-    font-size: 12px;
+
+  .button,
+  .pageNumber,
+  .first,
+  .last {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
   }
 }

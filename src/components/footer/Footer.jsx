@@ -31,7 +31,8 @@ const Footer = () => {
           <Image src="/youtube.png" alt="" width={18} height={18} />
         </div>
         <div className={styles.desc}>
-          Portal blog and news about magelang city. <br /><br />
+          Portal blog and news about magelang city. <br />
+          <br />
           Kaliangkrik, <br />
           Magelang, Jawa Tengah, Indonesia
         </div>

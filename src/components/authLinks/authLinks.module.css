@@ -1,42 +1,105 @@
+.links {
+  flex: 1;
+  font-size: 20px;
+  display: flex;
+  align-items: end;
+  gap: 60px;
+  cursor: pointer;
+}
+
 .link {
-    cursor: pointer;
+  display: inline-block; /* Agar garis bawah hanya selebar teks */
+  position: relative; /* Untuk positioning pseudo-element */
+  text-decoration: none; /* Hilangkan garis bawah default */
+  color: inherit; /* Warna teks mengikuti warna elemen induk */
+}
+
+.link::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 5px; /* Tinggi SVG */
+  background: url("/brushStroke.svg") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  bottom: -8px; /* Posisikan di bawah teks */
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 .burger {
-    width: 20px;
-    height: 16px;
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
+  width: 20px;
+  height: 16px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
 }
 
 .line {
-    width: 100%;
-    height: 2px;
-    background-color: var(--textColor);
+  width: 100%;
+  height: 2px;
+  background-color: var(--textColor);
 }
 
 .responsiveMenu {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    background-color: var(--bg);
-    height: calc(100vh - 100px);
-    width: 100%;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  background-color: var(--bg);
+  height: calc(100vh - 100px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+}
+
+@media screen and (max-width: 1280px) {
+  .logo {
+    font-size: 32px;
+  }
+
+  .links {
+    font-size: 18px;
+    gap: 15px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .link {
+    display: none;
+  }
+  .burger {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+    font-size: 24px;
+  }
 }
 
 @media screen and (max-width: 640px) {
-    .burger {
-        display: flex;
-    }
-
-    .link {
-        display: none;
-    }
+  .container {
+    height: 50px;
+  }
+  .burger {
+    display: flex;
+  }
+  .links {
+    justify-content: flex-end;
+  }
+  .link {
+    display: none;
+  }
 }

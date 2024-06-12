@@ -1,63 +1,90 @@
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between ;
-    height: 100px;
-}
-
-.social {
-    display: flex;
-    gap: 10px;
-    flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
 }
 
 .logo {
-    flex: 1;
-    text-align: center;
-    font-size: 36px;
-    font-weight: bold;
+  flex: 1;
+  text-align: left;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.blog {
+  color: darkseagreen;
 }
 
 .links {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    flex: 1;
-    font-size: 20px;
+  flex: 1;
+  font-size: 20px;
+  display: flex;
+  align-items: end;
+  gap: 60px;
+  cursor: pointer;
+}
+
+.link {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+.link::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 5px; /* Tinggi SVG */
+  background: url("/brushStroke.svg") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  bottom: -8px; /* Posisikan di bawah teks */
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 @media screen and (max-width: 1280px) {
-    .logo {
-        font-size: 32px;
-    }
+  .links {
+    gap: none;
+  }
+  .logo {
+    font-size: 32px;
+  }
 
-    .links {
-        font-size: 18px;
-        gap: 15px;
-    }
 }
 
 @media screen and (max-width: 1024px) {
-    .social {
-        display: none;
-    }
-
-    .logo {
-        text-align: left;
-    }
+  .links {
+    gap: 10px;
+  }
+  .link {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .logo {
-        font-size: 24px;
-    }
+  .logo {
+    font-size: 24px;
+  }
 }
 
 @media screen and (max-width: 640px) {
-    .links {
-        justify-content: flex-end;
-    }
-    .link {
-        display: none;
-    }
+  .container {
+    height: 50px;
+  }
+  .links {
+    justify-content: flex-end;
+  }
+  .link {
+    display: none;
+  }
 }

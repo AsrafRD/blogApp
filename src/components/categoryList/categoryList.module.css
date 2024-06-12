@@ -78,6 +78,7 @@
   }
   .category {
     margin-bottom: 5px;
+    border-radius: 5px;
     font-size: 11px;
     width: 18%;
     height: 30px;

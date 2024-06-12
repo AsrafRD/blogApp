@@ -33,7 +33,7 @@
 
 .category  {
     padding: 3px 8px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 12px;
     color: white;
     width: max-content;
@@ -62,6 +62,15 @@
     font-size: 12px;
 }
 
+.username {
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+}
+
 .date {
     color: gray;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
 }
