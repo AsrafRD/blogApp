@@ -13,7 +13,7 @@ const Pagination = ({ page, hasPrev, hasNext }) => {
         disabled={!hasPrev}
         onClick={() => router.push(`?page=${page - 1}`)}
         >
-        Previous
+        Prev
       </button>
       <button
         className={styles.button}

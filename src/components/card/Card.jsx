@@ -12,10 +12,10 @@ const Card = ({ key, item }) => {
           </span>
           <span className={styles.category}>{item.catSlug}</span>
         </div>
-        <Link href={`/posts/${item.slug}`}>
-          <h1>{item.title}</h1>
+        <Link href={`/posts/${item.slug}`} className={styles.title}>
+          {item.title}
         </Link>
-        <div className={styles.postDesc} dangerouslySetInnerHTML={{ __html: item?.desc.length > 640 ? `${item?.desc.substring(0, 640)}...` : item?.desc }} />
+        <div className={styles.postDesc} dangerouslySetInnerHTML={{ __html: item?.desc.length > 340 ? `${item?.desc.substring(0, 300)}...` : item?.desc }} />
         <Link href={`/posts/${item.slug}`} className={styles.link}>
           Read More
         </Link>

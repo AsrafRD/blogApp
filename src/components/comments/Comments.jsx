@@ -39,7 +39,7 @@ const Comments = ({ postSlug }) => {
   };
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Comment</h1>
+      <h1 className={styles.title}>Comments</h1>
       {status === "authenticated" ? (
         <div className={styles.write}>
           <textarea

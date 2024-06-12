@@ -44,23 +44,23 @@
 }
 
 .actions {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Jarak antara tombol */
-  }
-  
-  .actions button {
-    padding: 15px 20px; /* Padding tombol */
-    font-size: 16px; /* Ukuran font */
-    border: none; /* Hapus border */
-    border-radius: 5px; /* Sudut border */
-    cursor: pointer; /* Kursor menunjukkan interaktif */
-  }
-  
-  .actions button:hover {
-    background-color: #d79a9ad3;
-    color: white; /* Warna latar belakang saat dihover */
-  }
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Jarak antara tombol */
+}
+
+.actions button {
+  padding: 15px 20px; /* Padding tombol */
+  font-size: 16px; /* Ukuran font */
+  border: none; /* Hapus border */
+  border-radius: 5px; /* Sudut border */
+  cursor: pointer; /* Kursor menunjukkan interaktif */
+}
+
+.actions button:hover {
+  background-color: #d79a9ad3;
+  color: white; /* Warna latar belakang saat dihover */
+}
 
 .imageContainer {
   flex: 1;
@@ -112,10 +112,82 @@
 }
 @media screen and (max-width: 640px) {
   .title {
-    font-size: 36px;
+    font-size: 18px;
   }
 
   .desc p {
     font-size: 18px;
+  }
+
+  .userImageContainer {
+    width: 20px;
+    height: 20px;
+    position: relative;
+  }
+
+  .avatar {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .userTextContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--softTextColor);
+  }
+
+  .username {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .date {
+    font-size: 13px;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Jarak antara tombol */
+  }
+
+  .actions button {
+    padding: 10px 10px; /* Padding tombol */
+    font-size: 12px; /* Ukuran font */
+    border: none; /* Hapus border */
+    border-radius: 5px; /* Sudut border */
+    cursor: pointer; /* Kursor menunjukkan interaktif */
+  }
+
+
+  .imageContainer {
+    flex: 1;
+    height: 350px;
+    position: relative;
+  }
+
+  .image {
+    object-fit: cover;
+  }
+
+  .content {
+    display: flex;
+    gap: 20px;
+  }
+
+  .post {
+    margin-top: 30px;
+  }
+
+  .read {
+    font-size: 11px;
+    color: var(--softTextColor); /* Sesuaikan warna sesuai kebutuhan */
+    margin-bottom: 10px; /* Sesuaikan jarak bawah sesuai kebutuhan */
+  }
+
+  .desc {
+    font-size: 12px;
+    text-align: justify;
   }
 }

@@ -4,19 +4,39 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className={styles.container}>
       <div className={styles.info}>
         <div className={styles.logo}>
-          <Image src="/logo.png" alt="" width={50} height={50} />
-          <h1 className={styles.logoText}>Magelang.Blog</h1>
+          <div className={styles.logoImageContainer}>
+            <Image
+              src="/logo.png"
+              alt=""
+              width={50}
+              height={50}
+              className={styles.logoImage}
+            />
+          </div>
+          <div>
+            <h1 className={styles.logoText}>Magelang.Blog</h1>
+          </div>
         </div>
-        <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis blanditiis adipisci nihil consectetur saepe impedit vel cupiditate facilis dolore alias architecto, sunt sit incidunt! Doloribus asperiores mollitia sapiente similique quibusdam?</p>
+
         <div className={styles.icons}>
           <Image src="/facebook.png" alt="" width={18} height={18} />
           <Image src="/instagram.png" alt="" width={18} height={18} />
           <Image src="/tiktok.png" alt="" width={18} height={18} />
           <Image src="/youtube.png" alt="" width={18} height={18} />
+        </div>
+        <div className={styles.desc}>
+          Portal blog and news about magelang city. <br /><br />
+          Kaliangkrik, <br />
+          Magelang, Jawa Tengah, Indonesia
+        </div>
+        <div className={styles.copyright}>
+          Copyright © {currentYear} Magelang.Blog. All rights reserved.
         </div>
       </div>
       <div className={styles.links}>

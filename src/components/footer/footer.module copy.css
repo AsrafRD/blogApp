@@ -7,7 +7,6 @@
   color: var(--softTextColor);
 }
 
-
 .info {
   flex: 1;
   display: flex;
@@ -17,20 +16,8 @@
 
 .logo {
   display: flex;
-  align-items: center;
+  align-content: center;
   gap: 10px;
-}
-
-.logoImageContainer {
-  display: flex;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-}
-
-.logoImage {
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .logoText {
@@ -65,12 +52,6 @@
   font-weight: bold;
 }
 
-.copyright {
-  font-size: 16px;
-  margin-top: 20px;
-  color: var(--softTextColor); /* Sesuaikan dengan desain Anda */
-}
-
 @media screen and (max-width: 1024px) {
   .links {
     gap: 50px;
@@ -98,8 +79,13 @@
   }
 
   .info {
-    width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start; /* Menambahkan ini agar elemen dalam info menempel ke kiri */
+    gap: 10px;
+    width: 100%; /* Memastikan info mengambil seluruh lebar container */
+    padding-left: 20px; /* Menambahkan padding kiri jika diperlukan */
   }
 
   .logo {
@@ -110,7 +96,7 @@
 
   .logoImageContainer {
     display: flex;
-    align-items: center;
+    align-items: end;
     width: 50px;
     height: 50px;
   }
@@ -137,7 +123,6 @@
   }
 
   .desc {
-    font-size: 13px;
     font-weight: 100;
   }
 
@@ -149,11 +134,5 @@
 
   .links {
     font-size: 12px;
-  }
-
-  .copyright {
-    font-size: 13px;
-    margin-top: 20px;
-    color: var(--softTextColor); /* Sesuaikan dengan desain Anda */
   }
 }
